@@ -20,3 +20,14 @@ export function calculateAvarage(numbers) {
 
   return numbers[0]
 }
+
+
+
+export function factorial(n) {
+
+  if (typeof n !== 'number' ) return NaN
+  if ( n < 0) return null
+  if ( n === 0 || n === 1 ) return 1
+
+  return n *factorial(n-1)
+}

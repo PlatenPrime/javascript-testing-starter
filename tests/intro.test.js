@@ -1,5 +1,5 @@
 import { describe, test, it, expect } from 'vitest';
-import { max, fizzBuzz, calculateAvarage } from '../src/intro.js';
+import { max, fizzBuzz, calculateAvarage, factorial } from '../src/intro.js';
 
 describe("max", () => {
     it("should return first argument if it is greater", () => {
@@ -49,19 +49,49 @@ describe("calculateAvarage", () => {
         expect(calculateAvarage([])).toBeNaN();
     });
 
-it("should calculate the avarage of an array with a single element", () => {
-    expect(calculateAvarage([5])).toBe(5);
+    it("should calculate the avarage of an array with a single element", () => {
+        expect(calculateAvarage([5])).toBe(5);
+    })
+
+
+    it("should calculate the avarage of an array with a two elements", () => {
+        expect(calculateAvarage([5, 9])).toBe(7);
+    })
+
+
+    it("should calculate the avarage of an array with a three elements", () => {
+        expect(calculateAvarage([5, 9, 13])).toBe(9);
+    })
+
 })
 
 
-it("should calculate the avarage of an array with a two elements", () => {
-    expect(calculateAvarage([5, 9])).toBe(7);
-})
 
 
-it("should calculate the avarage of an array with a three elements", () => {
-    expect(calculateAvarage([5, 9, 13])).toBe(9);
-})
+describe("factorial", () => {
 
+    it("should return NaN if given value is not a number", () => {
+        expect(factorial("number")).toBeNaN();
+    })
+
+    it("should return null if given value is negative", () => {
+        expect(factorial(-5)).toBeNull();
+    })
+
+    it("should return 1 if given value is 0", () => {
+        expect(factorial(0)).toBe(1);
+    })
+
+    it("should return 1 if given value is 1", () => {
+        expect(factorial(1)).toBe(1);
+    })
+
+    it("should return 6 if given value is 3", () => {
+        expect(factorial(3)).toBe(6);
+    })
+
+    it("should return the factorial of a number", () => {
+        expect(factorial(5)).toBe(120);
+    });
 })
 
