@@ -1,5 +1,5 @@
 import { describe, test, it, expect } from 'vitest';
-import { getCoupons } from '../src/core.js';
+import { calculateDiscount, getCoupons, validateUserInput } from '../src/core.js';
 
 
 
@@ -76,3 +76,62 @@ describe("getCoupons", () => {
 })
 
 
+
+describe('calculateDiscount', () => {
+    it('should return discounted price if given valid discount code', () => {
+        expect(calculateDiscount(10, 'SAVE10')).toBe(9);
+        expect(calculateDiscount(10, 'SAVE20')).toBe(8);
+    })
+
+
+    it('should handle non-numeric price', () => {
+        expect(calculateDiscount("dirtge", 'SAVE10')).toMatch(/invalid/i);
+    })
+
+    it('should handle negative or zero price', () => {
+        expect(calculateDiscount(-3, 'SAVE10')).toMatch(/invalid/i);
+    })
+
+    it('should handle non-string discount code', () => {
+        expect(calculateDiscount(10, 34)).toMatch(/invalid/i);
+    })
+
+    it('should handle invalid discount code', () => {
+        expect(calculateDiscount(10, "INVALID")).toMatch(/invalid/i);
+    })
+
+    it('should handle discount code greater than 1', () => {
+        expect(calculateDiscount(10, "SAVE200")).toMatch(/invalid/i);
+    })
+
+})
+
+
+describe('validateUserInput', () => {
+
+    it('should return succesful message if given valid input', () => {
+        expect(validateUserInput('John', 28)).toMatch(/success/i);
+    })
+
+    it('should return error if username is not a string', () => {
+        expect(validateUserInput(123, 18)).toMatch(/invalid/i);
+    })
+
+    it('should return error if username length less than 3', () => {
+        expect(validateUserInput("Po", 18)).toMatch(/invalid/i);
+    })
+
+    it('should return error if username length greater than 255', () => {
+        expect(validateUserInput("P".repeat(256), 18)).toMatch(/invalid/i);
+    })
+
+    it('should return error if age is not a number', () => {
+        expect(validateUserInput("Portu", "23")).toMatch(/invalid/i);
+    })
+
+    it('should return error if age is less than 18', () => {
+        expect(validateUserInput("Portu", 16)).toMatch(/invalid/i);
+    })
+
+
+})

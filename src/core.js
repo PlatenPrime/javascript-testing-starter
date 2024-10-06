@@ -9,6 +9,13 @@ export function getCoupons() {
 
 // Lesson: Positive and negative testing
 export function calculateDiscount(price, discountCode) {
+
+  const discounts = {
+    SAVE10: 0.1,
+    SAVE20: 0.2,
+    SAVE200: 2,
+  };
+
   if (typeof price !== 'number' || price <= 0) {
     return 'Invalid price';
   }
@@ -17,21 +24,22 @@ export function calculateDiscount(price, discountCode) {
     return 'Invalid discount code';
   }
 
-  let discount = 0;
-  if (discountCode === 'SAVE10') {
-    discount = 0.1;
-  } else if (discountCode === 'SAVE20') {
-    discount = 0.2;
+  if (!discounts.hasOwnProperty(discountCode)) {
+    return 'Invalid discount code';
   }
 
-  return price - price * discount;
+  if (discounts[discountCode] > 1) {
+    return 'Invalid discount code';
+  }
+
+  return price - price * discounts[discountCode];
 }
 
 // Exercise: Positive and negative testing
 export function validateUserInput(username, age) {
   let errors = [];
 
-  if (typeof username !== 'string' || username.length < 3) {
+  if (typeof username !== 'string' || username.length < 3 || username.length > 255 ) {
     errors.push('Invalid username');
   }
 
