@@ -39,7 +39,7 @@ export function calculateDiscount(price, discountCode) {
 export function validateUserInput(username, age) {
   let errors = [];
 
-  if (typeof username !== 'string' || username.length < 3 || username.length > 255 ) {
+  if (typeof username !== 'string' || username.length < 3 || username.length > 255) {
     errors.push('Invalid username');
   }
 
@@ -60,6 +60,10 @@ export function isValidUsername(username) {
   const minLength = 5;
   const maxLength = 15;
 
+  if (typeof username !== 'string') {
+    return false;
+  }
+
   return username.length >= minLength && username.length <= maxLength;
 }
 
@@ -69,6 +73,10 @@ export function canDrive(age, countryCode) {
     US: 16,
     UK: 17,
   };
+
+  if (typeof age !== 'number' || typeof countryCode !== 'string') {
+    return 'Invalid input';
+  }
 
   if (!legalDrivingAge[countryCode]) {
     return 'Invalid country code';
