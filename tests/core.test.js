@@ -138,23 +138,16 @@ describe('validateUserInput', () => {
 
 
 describe('isPriceInRange', () => {
-    it('should return true if price is in range', () => {
-        expect(isPriceInRange(10, 5, 15)).toBe(true);
-    })
 
-    it('should return false if price is less than min', () => {
-        expect(isPriceInRange(3, 5, 15)).toBe(false);
+    it.each([
+        { price: 10, min: 5, max: 15, result: true },
+        { price: 3, min: 5, max: 15, result: false },
+        { price: 45, min: 5, max: 15, result: false },
+        { price: 15, min: 5, max: 15, result: true },
+        { price: 5, min: 5, max: 15, result: true },
+    ])("shoud return $result if price $price is in range between $min and $max", ({ price, min, max, result }) => {
+        expect(isPriceInRange(price, min, max)).toBe(result);
     })
-
-    it('should return false if price is greater than max', () => {
-        expect(isPriceInRange(45, 5, 15)).toBe(false);
-    })
-
-    it('should return true if price is equal to min or max', () => {
-        expect(isPriceInRange(15, 5, 15)).toBe(true);
-        expect(isPriceInRange(5, 5, 15)).toBe(true);
-    })
-
 
 })
 
