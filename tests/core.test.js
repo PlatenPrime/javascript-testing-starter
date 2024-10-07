@@ -1,5 +1,5 @@
-import { describe, test, it, expect } from 'vitest';
-import { calculateDiscount, canDrive, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core.js';
+import { describe, test, it, expect, beforeEach, afterEach, afterAll, beforeAll } from 'vitest';
+import { calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core.js';
 
 
 
@@ -210,6 +210,22 @@ describe('canDrive', () => {
 
 
 })
+
+
+describe('fetchData', () => {
+    it('should return a promise that resolves to an array of numbers', async () => {
+        try {
+            const result = await fetchData();
+             expect(result).toBeInstanceOf(Array);
+        expect(result.length).toBeGreaterThan(0);
+        } catch (error) {
+            expect(error).toHaveProperty("reason");
+            expect(error.reason).toMatch(/failed/i);
+        }
+       
+    })
+})
+
 
 
 
