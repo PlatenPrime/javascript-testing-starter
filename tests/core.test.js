@@ -1,5 +1,5 @@
 import { describe, test, it, expect, beforeEach, afterEach, afterAll, beforeAll } from 'vitest';
-import { calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core.js';
+import { Stack, calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core.js';
 
 
 
@@ -216,16 +216,97 @@ describe('fetchData', () => {
     it('should return a promise that resolves to an array of numbers', async () => {
         try {
             const result = await fetchData();
-             expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+            expect(result).toBeInstanceOf(Array);
+            expect(result.length).toBeGreaterThan(0);
         } catch (error) {
             expect(error).toHaveProperty("reason");
             expect(error.reason).toMatch(/failed/i);
         }
-       
+
     })
 })
 
+
+describe('Stack', () => {
+
+    let stack
+
+    beforeEach(() => {
+        stack = new Stack();
+    })
+
+
+
+
+    it('push should add an item to the stack', () => {
+        stack.push(1);
+
+        expect(stack.size()).toBe(1);
+    })
+
+
+    it('pop should remove and return the top item from the stack', () => {
+        stack.push(1)
+        stack.push(2)
+
+        expect(stack.pop()).toBe(2);
+        expect(stack.size()).toBe(1);
+    })
+
+    it('pop should throw an error if the stack is empty ', () => {
+        try {
+            stack.pop()
+        } catch (error) {
+            expect(error.message).toMatch(/empty/i);
+        }
+        // Or like this
+        expect(() => stack.pop()).toThrow(/empty/i);
+
+    })
+
+    it('peek method should return the top item from the stack', () => {
+        stack.push(1)
+        stack.push(2)
+
+        const peekedItem = stack.peek();
+
+        expect(peekedItem).toBe(2);
+        expect(stack.size()).toBe(2);
+    })
+
+    it('peek should throw an error if the stack is empty', () => {
+        expect(() => stack.peek()).toThrow(/empty/i);
+    })
+
+
+    it('isEmpty should return true if the stack is empty', () => {
+        expect(stack.isEmpty()).toBe(true);
+    })
+
+    it('isEmpty should return false if the stack is not empty', () => {
+        stack.push(1)
+        expect(stack.isEmpty()).toBe(false);
+    })
+
+
+    it('size should return the number of items in the stack', () => {
+        stack.push(1)
+        stack.push(2)   
+
+        expect(stack.size()).toBe(2);
+    })
+
+
+    it('clear should remove all items from the stack', () => {
+        stack.push(1)
+        stack.push(2)
+
+        stack.clear()
+
+        expect(stack.size()).toBe(0);
+    })
+
+})
 
 
 
