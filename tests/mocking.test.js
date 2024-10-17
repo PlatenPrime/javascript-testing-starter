@@ -1,10 +1,11 @@
 import { vi, it, expect, describe } from 'vitest';
-import { getPriceInCurrency, getShippingInfo, renderPage, signUp, submitOrder } from '../src/mocking';
+import { getPriceInCurrency, getShippingInfo, login, renderPage, signUp, submitOrder } from '../src/mocking';
 import { getExchangeRate } from '../src/libs/currency';
 import { getShippingQuote } from '../src/libs/shipping';
 import { trackPageView } from '../src/libs/analytics';
 import { charge } from '../src/libs/payment';
 import { sendEmail } from '../src/libs/email';
+import security from '../src/libs/security';
 
 vi.mock('../src/libs/currency');
 vi.mock('../src/libs/shipping');
@@ -172,7 +173,6 @@ describe('signUp', () => {
     })
 
 
-
     it('should send email if email is valid', async () => {
 
         const result = await signUp(email);
@@ -185,9 +185,21 @@ describe('signUp', () => {
 
     })
 
+})
 
 
+describe('login', () => {
 
+    const email = 'proshta@gmail.com';
 
+    it('should email a one-time login code', async () => {
+        const spy = vi.spyOn(security, 'generateCode');
 
+        await login(email);
+        console.log(spy.mock.results[0]);
+
+        const securityCode = spy.mock.results[0].value.toString();
+        expect(sendEmail).toHaveBeenCalledWith(email, securityCode);
+
+    })
 })
