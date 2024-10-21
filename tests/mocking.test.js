@@ -1,5 +1,5 @@
-import { vi, it, expect, describe } from 'vitest';
-import { getPriceInCurrency, getShippingInfo, login, renderPage, signUp, submitOrder } from '../src/mocking';
+import { vi, it, expect, describe, beforeEach } from 'vitest';
+import { getDiscount, getPriceInCurrency, getShippingInfo, isOnline, login, renderPage, signUp, submitOrder } from '../src/mocking';
 import { getExchangeRate } from '../src/libs/currency';
 import { getShippingQuote } from '../src/libs/shipping';
 import { trackPageView } from '../src/libs/analytics';
@@ -155,6 +155,7 @@ describe('submitOrder', () => {
 
 describe('signUp', () => {
 
+
     const email = 'proshta@gmail.com';
 
 
@@ -202,4 +203,53 @@ describe('login', () => {
         expect(sendEmail).toHaveBeenCalledWith(email, securityCode);
 
     })
+})
+
+
+describe('isOnline', () => {
+    it('should return false if current hour is outside of the available hours', () => {
+
+        vi.setSystemTime(new Date("2024-01-01, 07:59:00"));
+        expect(isOnline()).toBe(false);
+
+     vi.setSystemTime(new Date("2024-01-01, 20:00:00"));
+        expect(isOnline()).toBe(false);
+  
+    })
+
+    it('should return true if current hour is inside of the available hours', () => {
+
+        vi.setSystemTime(new Date("2024-01-01, 08:00:00"));
+        expect(isOnline()).toBe(true);
+
+
+        vi.setSystemTime(new Date("2024-01-01, 09:59:00"));
+        expect(isOnline()).toBe(true);
+
+        vi.setSystemTime(new Date("2024-01-01, 19:59:00"));
+        expect(isOnline()).toBe(true);
+    })
+})
+
+
+
+
+describe('getDiscount', () => {
+    it('should return 0 if cuurent date is not Christmas', () => {
+
+        vi.setSystemTime(new Date("2024-01-01, 07:59:00"));
+        expect(getDiscount()).toBe(0);
+
+        vi.setSystemTime(new Date("2024-12-26, 07:59:00"));
+        expect(getDiscount()).toBe(0);
+    })
+
+    it('should return 0.2 if current date is Christmas', () => {
+
+        vi.setSystemTime(new Date("2024-12-25, 07:59:00"));
+        expect(getDiscount()).toBe(0.2);
+
+       
+    })
+
 })
