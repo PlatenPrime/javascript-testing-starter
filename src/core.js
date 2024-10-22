@@ -1,6 +1,5 @@
 // Exercise: Writing good assertions
 export function getCoupons() {
-
   return [
     { code: 'SAVE20NOW', discount: 0.2 },
     { code: 'DISCOUNT50OFF', discount: 0.5 },
@@ -9,7 +8,6 @@ export function getCoupons() {
 
 // Lesson: Positive and negative testing
 export function calculateDiscount(price, discountCode) {
-
   const discounts = {
     SAVE10: 0.1,
     SAVE20: 0.2,
@@ -39,7 +37,11 @@ export function calculateDiscount(price, discountCode) {
 export function validateUserInput(username, age) {
   let errors = [];
 
-  if (typeof username !== 'string' || username.length < 3 || username.length > 255) {
+  if (
+    typeof username !== 'string' ||
+    username.length < 3 ||
+    username.length > 255
+  ) {
     errors.push('Invalid username');
   }
 
@@ -87,8 +89,7 @@ export function canDrive(age, countryCode) {
 
 // Lesson: Testing asynchronous code
 export function fetchData() {
-
-  return Promise.reject({reason: "Operation failed"})
+  return Promise.reject({ reason: 'Operation failed' });
 
   return new Promise((resolve) => {
     setTimeout(() => {

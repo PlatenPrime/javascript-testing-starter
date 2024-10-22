@@ -12,20 +12,16 @@ export function fizzBuzz(n) {
 }
 
 export function calculateAvarage(numbers) {
-
-  if (numbers.length === 0) return NaN
+  if (numbers.length === 0) return NaN;
 
   const sum = numbers.reduce((a, b) => a + b, 0);
   return sum / numbers.length;
 }
 
-
-
 export function factorial(n) {
+  if (typeof n !== 'number') return NaN;
+  if (n < 0) return null;
+  if (n === 0 || n === 1) return 1;
 
-  if (typeof n !== 'number' ) return NaN
-  if ( n < 0) return null
-  if ( n === 0 || n === 1 ) return 1
-
-  return n *factorial(n-1)
+  return n * factorial(n - 1);
 }
