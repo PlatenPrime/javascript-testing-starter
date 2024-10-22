@@ -1,4 +1,4 @@
-import { vi, it, expect, describe, beforeEach } from 'vitest';
+import { vi, it, expect, describe, } from 'vitest';
 import {
   getDiscount,
   getPriceInCurrency,
@@ -156,7 +156,7 @@ describe('signUp', () => {
   });
 
   it('should send email if email is valid', async () => {
-    const result = await signUp(email);
+    await signUp(email);
 
     expect(sendEmail).toHaveBeenCalled();
     const args = vi.mocked(sendEmail).mock.calls[0];
